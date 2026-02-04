@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تقرير الأداء الرقمي - شركة إتقان</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: { 900: '#020617', 800: '#0f172a', 700: '#1e293b' },
+                        brand: { 
+                            blue: '#38bdf8', 
+                            gold: '#f59e0b', 
+                            indigo: '#818cf8', 
+                            emerald: '#10b981', 
+                            rose: '#fb7185' 
+                        }
+                    },
+                    fontFamily: { cairo: ['Cairo', 'sans-serif'] },
+                    animation: { 
+                        'float': 'float 6s ease-in-out infinite',
+                        'fade-in': 'fadeIn 1s ease-out forwards'
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Cairo', sans-serif; background-color: #020617; color: #fff; overflow-x: hidden; line-height: 1.6; }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        .glass-card-sticky {
+            background: rgba(2, 6, 23, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+        }
+        .gradient-text {
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+        .reveal-on-scroll { opacity: 0; transform: translateY(30px); transition: all 1s ease-out; }
+        .is-visible { opacity: 1; transform: translateY(0); }
+        
+        /* Lightbox */
+        #lightbox {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(2, 6, 23, 0.95);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+            cursor: zoom-out;
+            padding: 2rem;
+        }
+        #lightbox img {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 8px;
+            box-shadow: 0 0 40px rgba(56, 189, 248, 0.1);
+            object-fit: contain;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-blue selection:text-white">
+
+    <!-- Lightbox Container -->
+    <div id="lightbox" onclick="closeLightbox()">
+        <img id="lightbox-img" src="" alt="Full Screen View">
+    </div>
+
+    <!-- Background Elements -->
+    <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-brand-blue/5 rounded-full blur-[100px] animate-float"></div>
+        <div class="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-brand-indigo/5 rounded-full blur-[120px] animate-float" style="animation-delay: -3s;"></div>
+    </div>
+
+    <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+        <!-- Header -->
+        <header class="text-center mb-16 space-y-4 reveal-on-scroll is-visible">
+            <div class="inline-block p-1 px-3 rounded-full glass-card text-brand-blue text-sm font-semibold mb-4 tracking-wider">
+                REPORT 2026
+            </div>
+            <h1 class="text-4xl md:text-6xl font-bold leading-normal">
+                تحليل الأداء الرقمي <br>
+                <span class="gradient-text py-2">شركة إتقان</span>
+            </h1>
+            <p class="text-slate-400 text-lg max-w-2xl mx-auto leading-relaxed">
+                تقييم شامل لحالة الموقع الإلكتروني (SEO) والأداء التقني
+            </p>
+            <a href="https://etqan-cpa.sa/" target="_blank" class="inline-flex items-center gap-2 text-brand-blue hover:text-white transition-colors mt-4 border-b border-brand-blue/30 pb-1">
+                <span>etqan-cpa.sa</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+            </a>
+        </header>
+
+        <!-- KPI Grid (Based on CSV - Basic Data) -->
+        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12 reveal-on-scroll">
+            
+            <!-- Card 1: Organic Traffic -->
+            <div class="glass-card p-6 rounded-2xl relative overflow-hidden group hover:bg-white/5 transition-all">
+                <div class="relative z-10">
+                    <p class="text-slate-400 text-sm font-medium mb-2">الزيارات العضوية (Organic)</p>
+                    <h3 class="text-4xl font-bold text-white mb-3">≈ 26</h3>
+                    <div class="flex items-center gap-2 text-brand-rose text-xs font-semibold bg-brand-rose/10 px-2 py-1 rounded w-fit">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 10.293a1 1 0 010 1.414l-6 6a1 1 0 01-1.414 0l-6-6a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l4.293-4.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                        منخفض جداً
+                    </div>
+                    <p class="text-xs text-slate-500 mt-3 leading-relaxed">اتجاه الترتيب: يتحسن ببطء لكنه ما زال ضعيفاً</p>
+                </div>
+            </div>
+
+            <!-- Card 2: Keywords -->
+            <div class="glass-card p-6 rounded-2xl relative overflow-hidden group hover:bg-white/5 transition-all">
+                <div class="relative z-10">
+                    <p class="text-slate-400 text-sm font-medium mb-2">الكلمات المفتاحية (Keywords)</p>
+                    <h3 class="text-4xl font-bold text-white mb-3">43-63</h3>
+                    <div class="flex items-center gap-2 text-brand-gold text-xs font-semibold bg-brand-gold/10 px-2 py-1 rounded w-fit">
+                        <span>⚠️</span>
+                        نطاق محدود
+                    </div>
+                    <p class="text-xs text-slate-500 mt-3 leading-relaxed">عدد محدود ويحتاج توسّع عاجل</p>
+                </div>
+            </div>
+
+            <!-- Card 3: Backlinks -->
+            <div class="glass-card p-6 rounded-2xl relative overflow-hidden group hover:bg-white/5 transition-all">
+                <div class="relative z-10">
+                    <p class="text-slate-400 text-sm font-medium mb-2">الروابط الخلفية (Backlinks)</p>
+                    <h3 class="text-4xl font-bold text-white mb-3">≈ 0</h3>
+                    <div class="flex items-center gap-2 text-brand-rose text-xs font-semibold bg-brand-rose/10 px-2 py-1 rounded w-fit">
+                        <span>⛔</span>
+                        نقطة ضعف كبيرة
+                    </div>
+                    <p class="text-xs text-slate-500 mt-3 leading-relaxed">لا توجد إشارات (Authority) للموقع حالياً</p>
+                </div>
+            </div>
+
+            <!-- Card 4: Mobile Performance -->
+            <div class="glass-card p-6 rounded-2xl relative overflow-hidden group hover:bg-white/5 transition-all">
+                <div class="relative z-10">
+                    <p class="text-slate-400 text-sm font-medium mb-2">أداء الجوال (Performance)</p>
+                    <h3 class="text-4xl font-bold text-white mb-3">90<span class="text-xl text-slate-400">/100</span></h3>
+                    <div class="flex items-center gap-2 text-brand-emerald text-xs font-semibold bg-brand-emerald/10 px-2 py-1 rounded w-fit">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                        ممتاز
+                    </div>
+                    <p class="text-xs text-slate-500 mt-3 leading-relaxed">تجربة مستخدم جيدة جداً تقلل معدل الارتداد</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services & Capabilities Section (From Strengths CSV) -->
+        <section class="grid md:grid-cols-2 gap-6 mb-20 reveal-on-scroll">
+            <!-- Services -->
+            <div class="glass-card p-8 rounded-3xl border-t-4 border-brand-blue">
+                <h3 class="text-xl font-bold mb-6 flex items-center gap-3 text-white">
+                    <span class="text-2xl">💼</span> تنوع الخدمات (فرص الترتيب)
+                </h3>
+                <p class="text-slate-400 text-sm mb-6 leading-relaxed">
+                    يمتلك المكتب محفظة خدمات واسعة يمكن استغلالها لإنشاء صفحات هبوط متخصصة (Landing Pages) لتصدر نتائج البحث:
+                </p>
+                <div class="flex flex-wrap gap-2">
+                    <span class="px-3 py-2 bg-brand-blue/10 text-brand-blue rounded-lg text-sm border border-brand-blue/20">الاستشارات الإدارية والحوكمة</span>
+                    <span class="px-3 py-2 bg-brand-blue/10 text-brand-blue rounded-lg text-sm border border-brand-blue/20">إدارة الإفلاس</span>
+                    <span class="px-3 py-2 bg-brand-blue/10 text-brand-blue rounded-lg text-sm border border-brand-blue/20">المراجعة الداخلية</span>
+                    <span class="px-3 py-2 bg-brand-blue/10 text-brand-blue rounded-lg text-sm border border-brand-blue/20">الفحص النافي للجهالة</span>
+                    <span class="px-3 py-2 bg-brand-blue/10 text-brand-blue rounded-lg text-sm border border-brand-blue/20">الزكاة والضريبة</span>
+                    <span class="px-3 py-2 bg-brand-blue/10 text-brand-blue rounded-lg text-sm border border-brand-blue/20">المحاسبة القضائية</span>
+                    <span class="px-3 py-2 bg-brand-blue/10 text-brand-blue rounded-lg text-sm border border-brand-blue/20">مراجعة القوائم المالية</span>
+                </div>
+            </div>
+
+            <!-- Branches / Local SEO -->
+            <div class="glass-card p-8 rounded-3xl border-t-4 border-brand-emerald">
+                <h3 class="text-xl font-bold mb-6 flex items-center gap-3 text-white">
+                    <span class="text-2xl">📍</span> فرص التوسع المحلي (Local SEO)
+                </h3>
+                <p class="text-slate-400 text-sm mb-6 leading-relaxed">
+                    التواجد في 4 مدن يتيح بناء 4 استراتيجيات سيو محلية منفصلة للسيطرة على السوق في المناطق التالية:
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5">
+                        <span class="w-3 h-3 rounded-full bg-brand-emerald shadow-[0_0_8px_rgba(16,185,129,0.8)]"></span>
+                        <span class="text-sm font-bold">الرياض</span>
+                        <span class="mr-auto text-xs text-slate-500">منافسة عالية</span>
+                    </div>
+                    <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5">
+                        <span class="w-3 h-3 rounded-full bg-brand-emerald shadow-[0_0_8px_rgba(16,185,129,0.8)]"></span>
+                        <span class="text-sm font-bold">جدة</span>
+                        <span class="mr-auto text-xs text-slate-500">منافسة عالية</span>
+                    </div>
+                    <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5">
+                        <span class="w-3 h-3 rounded-full bg-brand-gold shadow-[0_0_8px_rgba(245,158,11,0.8)]"></span>
+                        <span class="text-sm font-bold">جازان</span>
+                        <span class="mr-auto text-xs text-brand-gold">فرصة ذهبية</span>
+                    </div>
+                    <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5">
+                        <span class="w-3 h-3 rounded-full bg-brand-gold shadow-[0_0_8px_rgba(245,158,11,0.8)]"></span>
+                        <span class="text-sm font-bold">خميس مشيط</span>
+                        <span class="mr-auto text-xs text-brand-gold">فرصة ذهبية</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SWOT Analysis Section (Updated with CSV Data) -->
+        <section class="mb-20 reveal-on-scroll">
+            <div class="glass-card rounded-3xl p-8 border-t-4 border-white/5">
+                <h2 class="text-2xl font-bold mb-8 flex items-center justify-center gap-3">
+                    <span class="text-brand-blue text-3xl">📊</span>
+                    تحليل سوات التفصيلي (SWOT Analysis)
+                </h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    
+                    <!-- Strengths -->
+                    <div class="bg-brand-emerald/5 border border-brand-emerald/10 p-6 rounded-2xl hover:bg-brand-emerald/10 transition-colors">
+                        <h3 class="flex items-center gap-2 text-brand-emerald font-bold mb-4 text-lg">
+                            <span class="bg-brand-emerald/20 p-1 rounded">💪</span> نقاط القوة (Strengths)
+                        </h3>
+                        <ul class="space-y-3 text-sm text-slate-300">
+                            <li class="flex items-start gap-3"><span class="text-brand-emerald font-bold mt-1">✓</span> <strong>ترخيص الهيئة (517):</strong> يعزز المصداقية ويدعم معايير EEAT.</li>
+                            <li class="flex items-start gap-3"><span class="text-brand-emerald font-bold mt-1">✓</span> <strong>فريق العمل:</strong> عرض أسماء وخبرات واضحة يزيد الثقة.</li>
+                            <li class="flex items-start gap-3"><span class="text-brand-emerald font-bold mt-1">✓</span> <strong>صفحة "من نحن":</strong> واضحة وتعبر عن الهوية والخدمات بامتياز.</li>
+                            <li class="flex items-start gap-3"><span class="text-brand-emerald font-bold mt-1">✓</span> <strong>آراء العملاء:</strong> موجودة وتعزز الموثوقية لدى الزوار.</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Weaknesses -->
+                    <div class="bg-brand-rose/5 border border-brand-rose/10 p-6 rounded-2xl hover:bg-brand-rose/10 transition-colors">
+                        <h3 class="flex items-center gap-2 text-brand-rose font-bold mb-4 text-lg">
+                            <span class="bg-brand-rose/20 p-1 rounded">📉</span> نقاط الضعف (Weaknesses)
+                        </h3>
+                        <ul class="space-y-3 text-sm text-slate-300">
+                            <li class="flex items-start gap-3"><span class="text-brand-rose font-bold mt-1">✕</span> <strong>مدونة ضعيفة:</strong> مقالتان فقط في السنة الماضية (يضعف الظهور المعلوماتي).</li>
+                            <li class="flex items-start gap-3"><span class="text-brand-rose font-bold mt-1">✕</span> <strong>استهداف المدن:</strong> لا توجد صفحات محلية قوية مما يضيع عملاء محليين.</li>
+                            <li class="flex items-start gap-3"><span class="text-brand-rose font-bold mt-1">✕</span> <strong>الترتيب:</strong> الموقع خارج الصفحة الأولى في معظم الكلمات المهمة.</li>
+                            <li class="flex items-start gap-3"><span class="text-brand-rose font-bold mt-1">✕</span> <strong>كلمات غير معبرة:</strong> الكلمات الحالية ليست محلية وتواجه منافسة عالية.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Opportunities -->
+                    <div class="bg-brand-blue/5 border border-brand-blue/10 p-6 rounded-2xl hover:bg-brand-blue/10 transition-colors">
+                        <h3 class="flex items-center gap-2 text-brand-blue font-bold mb-4 text-lg">
+                            <span class="bg-brand-blue/20 p-1 rounded">🚀</span> الفرص (Opportunities)
+                        </h3>
+                        <ul class="space-y-3 text-sm text-slate-300">
+                            <li class="flex items-start gap-3"><span class="text-brand-blue font-bold mt-1">↗</span> <strong>Local SEO:</strong> استخدام كلمات معبرة عن الخدمات في المناطق المستهدفة.</li>
+                            <li class="flex items-start gap-3"><span class="text-brand-blue font-bold mt-1">↗</span> <strong>Google Business:</strong> تفعيل وإدارة الملف لكل فرع بشكل منفصل للظهور في الخرائط.</li>
+                            <li class="flex items-start gap-3"><span class="text-brand-blue font-bold mt-1">↗</span> <strong>مدونة نشطة:</strong> كتابة مقالات أكثر وتعزيزها بمواضيع الخدمات لجذب زيارات.</li>
+                            <li class="flex items-start gap-3"><span class="text-brand-blue font-bold mt-1">↗</span> <strong>كلمات عالية القيمة:</strong> استهداف محلي دقيق لجلب عملاء حقيقيين.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Threats -->
+                    <div class="bg-brand-gold/5 border border-brand-gold/10 p-6 rounded-2xl hover:bg-brand-gold/10 transition-colors">
+                        <h3 class="flex items-center gap-2 text-brand-gold font-bold mb-4 text-lg">
+                            <span class="bg-brand-gold/20 p-1 rounded">⚠️</span> التهديدات (Threats)
+                        </h3>
+                        <ul class="space-y-3 text-sm text-slate-300">
+                            <li class="flex items-start gap-3"><span class="text-brand-gold font-bold mt-1">!</span> <strong>تحديثات جوجل (EEAT):</strong> تفضيل المواقع ذات المحتوى المعمّق والموثق بالخبراء.</li>
+                            <li class="flex items-start gap-3"><span class="text-brand-gold font-bold mt-1">!</span> <strong>المنافسة الشرسة:</strong> منافسة قوية جداً في الرياض وجدة تتطلب خطة قوية.</li>
+                            <li class="flex items-start gap-3"><span class="text-brand-gold font-bold mt-1">!</span> <strong>خرائط جوجل:</strong> خسارة العملاء لصالح المنافسين المتصدرين في الخرائط.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content Grid -->
+        <div class="grid lg:grid-cols-12 gap-8">
+            
+            <!-- Left Column: Detailed Analysis -->
+            <div class="lg:col-span-8 space-y-8">
+                
+                <!-- Technical Status -->
+                <section class="glass-card rounded-3xl p-8 reveal-on-scroll">
+                    <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                        <span class="text-brand-blue text-3xl">⚙️</span>
+                        التحليل التقني والفني
+                    </h2>
+                    <div class="space-y-6">
+                        <!-- Tech Item -->
+                        <div class="bg-white/5 p-4 rounded-xl border border-white/5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <div>
+                                <h4 class="font-bold text-white mb-2">الوضع التقني العام</h4>
+                                <p class="text-sm text-slate-400 leading-relaxed">الموقع جاهز تقنياً للتحسينات.</p>
+                            </div>
+                            <span class="px-4 py-2 bg-brand-emerald/20 text-brand-emerald text-sm font-bold rounded-lg text-center">جيد جداً</span>
+                        </div>
+                        
+                        <!-- Tech Item -->
+                        <div class="bg-white/5 p-4 rounded-xl border border-white/5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <div>
+                                <h4 class="font-bold text-white mb-2">سرعة تحميل المحتوى (LCP)</h4>
+                                <p class="text-sm text-slate-400 leading-relaxed">الوقت المستغرق لظهور أكبر عنصر في الصفحة.</p>
+                            </div>
+                            <div class="text-right md:text-left">
+                                <span class="px-4 py-2 bg-brand-gold/20 text-brand-gold text-sm font-bold rounded-lg inline-block">2.9 ثانية</span>
+                                <p class="text-[10px] text-slate-500 mt-2">مقبول ويحتاج تحسين بسيط</p>
+                            </div>
+                        </div>
+
+                        <!-- Tech Item -->
+                        <div class="bg-white/5 p-4 rounded-xl border border-white/5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <div>
+                                <h4 class="font-bold text-white mb-2">ثبات التخطيط (CLS)</h4>
+                                <p class="text-sm text-slate-400 leading-relaxed">مدى ثبات العناصر أثناء التحميل (عدم اهتزاز الشاشة).</p>
+                            </div>
+                            <span class="px-4 py-2 bg-brand-emerald/20 text-brand-emerald text-sm font-bold rounded-lg text-center">0.068 (جيد جداً)</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Screenshots Gallery (Lightbox Enabled) -->
+                <section class="glass-card rounded-3xl p-8 reveal-on-scroll">
+                    <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                        <span class="text-brand-blue text-3xl">📸</span>
+                        نظرة عامة على الموقع
+                    </h2>
+                    
+                    <!-- Gallery Grid -->
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        
+                        <div class="relative aspect-video bg-black/50 rounded-xl overflow-hidden border border-white/10 group cursor-pointer" onclick="openLightbox(this)">
+                            <img src="https://i.postimg.cc/5tfGYdzJ/Whats-App-Image-2026-02-04-at-7-24-22-PM.jpg" alt="Screenshot 1" class="w-full h-full object-cover object-top opacity-90 group-hover:opacity-100 transition-all duration-500">
+                            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="text-white text-3xl">🔍</span>
+                            </div>
+                        </div>
+                        
+                        <div class="relative aspect-video bg-black/50 rounded-xl overflow-hidden border border-white/10 group cursor-pointer" onclick="openLightbox(this)">
+                            <img src="https://i.postimg.cc/cJdjgy3q/Whats-App-Image-2026-02-04-at-7-24-47-PM.jpg" alt="Screenshot 2" class="w-full h-full object-cover object-top opacity-90 group-hover:opacity-100 transition-all duration-500">
+                            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="text-white text-3xl">🔍</span>
+                            </div>
+                        </div>
+                        
+                        <div class="relative aspect-video bg-black/50 rounded-xl overflow-hidden border border-white/10 group cursor-pointer" onclick="openLightbox(this)">
+                            <img src="https://i.postimg.cc/XvnhGS57/Whats-App-Image-2026-02-04-at-7-26-35-PM.jpg" alt="Screenshot 3" class="w-full h-full object-cover object-top opacity-90 group-hover:opacity-100 transition-all duration-500">
+                            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="text-white text-3xl">🔍</span>
+                            </div>
+                        </div>
+                        
+                        <div class="relative aspect-video bg-black/50 rounded-xl overflow-hidden border border-white/10 group cursor-pointer" onclick="openLightbox(this)">
+                            <img src="https://i.postimg.cc/SKm52FMH/Whats-App-Image-2026-02-04-at-7-26-54-PM.jpg" alt="Screenshot 4" class="w-full h-full object-cover object-top opacity-90 group-hover:opacity-100 transition-all duration-500">
+                            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="text-white text-3xl">🔍</span>
+                            </div>
+                        </div>
+                        
+                        <div class="relative aspect-video bg-black/50 rounded-xl overflow-hidden border border-white/10 group cursor-pointer" onclick="openLightbox(this)">
+                            <img src="https://i.postimg.cc/Dz7DJkGw/Whats-App-Image-2026-02-04-at-7-27-14-PM.jpg" alt="Screenshot 5" class="w-full h-full object-cover object-top opacity-90 group-hover:opacity-100 transition-all duration-500">
+                            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="text-white text-3xl">🔍</span>
+                            </div>
+                        </div>
+                        
+                        <div class="relative aspect-video bg-black/50 rounded-xl overflow-hidden border border-white/10 group cursor-pointer" onclick="openLightbox(this)">
+                            <img src="https://i.postimg.cc/k57Z63S5/Whats-App-Image-2026-02-04-at-7-28-02-PM.jpg" alt="Screenshot 6" class="w-full h-full object-cover object-top opacity-90 group-hover:opacity-100 transition-all duration-500">
+                            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="text-white text-3xl">🔍</span>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </section>
+
+            </div>
+
+            <!-- Right Column: Strategic Recommendations -->
+            <div class="lg:col-span-4 space-y-8">
+                
+                <div class="glass-card-sticky p-6 rounded-3xl sticky top-8 reveal-on-scroll border-t-4 border-brand-blue">
+                    <h3 class="text-xl font-bold mb-8 text-white">خطة العمل المقترحة 🚀</h3>
+                    
+                    <div class="space-y-8">
+                        <!-- Strategy 1 -->
+                        <div class="relative pr-6 border-r-2 border-slate-700 pb-2">
+                            <div class="absolute -right-[9px] top-0 w-4 h-4 rounded-full bg-brand-rose shadow-[0_0_10px_rgba(251,113,133,0.5)]"></div>
+                            <h4 class="font-bold text-brand-rose mb-3">بناء السلطة الرقمية (Authority)</h4>
+                            <p class="text-sm text-slate-300 leading-relaxed">
+                                الروابط الخلفية (Backlinks) تساوي <strong>0</strong>. يجب البدء فوراً في نشر مقالات الضيف والتسجيل في الأدلة المهنية الموثوقة.
+                            </p>
+                        </div>
+
+                        <!-- Strategy 2 -->
+                        <div class="relative pr-6 border-r-2 border-slate-700 pb-2">
+                            <div class="absolute -right-[9px] top-0 w-4 h-4 rounded-full bg-brand-gold shadow-[0_0_10px_rgba(245,158,11,0.5)]"></div>
+                            <h4 class="font-bold text-brand-gold mb-3">توسيع المحتوى المحلي</h4>
+                            <p class="text-sm text-slate-300 leading-relaxed">
+                                التركيز على Local SEO لمدن (جازان وخميس مشيط) كفرص سريعة، وبناء صفحات قوية للرياض وجدة للمنافسة طويلة الأمد.
+                            </p>
+                        </div>
+
+                        <!-- Strategy 3 -->
+                        <div class="relative pr-6 border-r-2 border-slate-700">
+                            <div class="absolute -right-[9px] top-0 w-4 h-4 rounded-full bg-brand-emerald shadow-[0_0_10px_rgba(16,185,129,0.5)]"></div>
+                            <h4 class="font-bold text-brand-emerald mb-3">تنشيط المدونة</h4>
+                            <p class="text-sm text-slate-300 leading-relaxed">
+                                زيادة المعدل من مقالتين سنوياً إلى مقالتين شهرياً، مع التركيز على مواضيع "الزكاة"، "الإفلاس"، و"المراجعة الداخلية".
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="text-center py-12 opacity-50 text-xs text-slate-500">
+        POWERED BY <span class="text-brand-blue font-bold">RICHLINE STRATEGIC AGENCY</span> &copy; 2026
+    </footer>
+
+    <script>
+        // Lightbox Logic
+        function openLightbox(element) {
+            const imgSrc = element.querySelector('img').src;
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            lightboxImg.src = imgSrc;
+            lightbox.style.display = 'flex';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').style.display = 'none';
+        }
+
+        // Animation Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('is-visible'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal-on-scroll').forEach((el) => observer.observe(el));
+    </script>
+</body>
+</html>
